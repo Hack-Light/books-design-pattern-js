@@ -12,30 +12,21 @@ let bookstore = [
   { index: 11, title: "title", status: "rented" }
 ];
 
-let Book = function () {
-  this.index = index;
-  this.title = title;
-  this.status = status;
-};
+let Book = function () {};
 
-Book.prototype.addBook = (index, title, status) => {
+// this prototype is used to add books to the book store
+Book.prototype.addBook = (title, status) => {
   let newbook = {
     index: bookstore.length + 1,
     title,
     status
   };
   bookstore.push(newbook);
-  // console.log(bookstore);
+  console.log(bookstore);
 };
 
-Book.prototype.availBooks = () => {
-  let available = bookstore.filter(function (books) {
-    return books.status == "available";
-  });
-  console.log(available);
-};
-
-Book.prototype.lend = (id, title) => {
+// this enables on rent a book
+Book.prototype.rentBook = (id, title) => {
   let book = bookstore.find(book => book.index == id && book.title == title);
   if (book.status == "available") {
     book.status = "rented";
@@ -47,12 +38,22 @@ Book.prototype.lend = (id, title) => {
   }
 };
 
+// this returns all the books that are rented
+Book.prototype.rentedBooks = () => {
+  let rented = bookstore.filter(books => {
+    return books.status == "rented";
+  });
+  console.log(rented);
+};
+
 Book.prototype.availBooks = () => {
   let available = bookstore.filter(books => {
-    return books.status == "rented";
+    return books.status == "available";
   });
   console.log(available);
 };
 
-Book.prototype.addBook(bookstore.length + 1, "Obi", "available");
-Book.prototype.lend(12, "Obi");
+let book = new Book();
+book.addBook("obi", "available");
+book.availBooks();
+book.rentedBooks();
